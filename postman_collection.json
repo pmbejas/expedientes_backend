@@ -1,0 +1,316 @@
+{
+    "info": {
+        "_postman_id": "b6a7b6a7-b6a7-4cbf-b6a7-30c57e2fe6d4",
+        "name": "Expedientes Penal API",
+        "description": "Colección para probar el sistema de control de expedientes.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Auth",
+            "item": [
+                {
+                    "name": "Login",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "pm.environment.set(\"token\", jsonData.token);",
+                                    "console.log(\"Token set:\", jsonData.token);"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"email\": \"pmbejas@gmail.com\",\r\n    \"password\": \"Pano+9417*\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/auth/login",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "login"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Register",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"nombre\": \"Usuario Test\",\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"123456\",\r\n    \"rol\": \"INSTRUCTOR\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/auth/register",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "register"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Catalogos",
+            "item": [
+                {
+                    "name": "Get Juzgados",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/catalogos/juzgados",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "catalogos",
+                                "juzgados"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Delitos",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/catalogos/delitos",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "catalogos",
+                                "delitos"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Instructores",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/catalogos/instructores",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "catalogos",
+                                "instructores"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Expedientes",
+            "item": [
+                {
+                    "name": "Crear Expediente (Auto Instructor)",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"numero\": 12345,\r\n    \"anio\": 2025,\r\n    \"caratula\": \"Fulano s/ Robo\",\r\n    \"juzgado_id\": 1,\r\n    \"delito_id\": 1\r\n    // instructor_id se asigna solo por terminación 5\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/expedientes",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "expedientes"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Expedientes",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/expedientes",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "expedientes"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Sorteo Juez",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/expedientes/1/sorteo",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "expedientes",
+                                "1",
+                                "sorteo"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Movimientos",
+            "item": [
+                {
+                    "name": "Registrar Movimiento (A Resolver)",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"expediente_id\": 1,\r\n    \"estado_nuevo_id\": 2,\r\n    \"detalle\": \"Pasa a Autos para Resolver\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/expedientes/1/movimientos",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "expedientes",
+                                "1",
+                                "movimientos"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Historial Movimientos",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{token}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/expedientes/1/movimientos",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "expedientes",
+                                "1",
+                                "movimientos"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:3000/api"
+        }
+    ]
+}
